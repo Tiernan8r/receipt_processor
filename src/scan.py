@@ -26,7 +26,6 @@ from transform import four_point_transform
 # from skimage.filters import threshold_local
 
 
-
 def scan(path):
     image = read_image(path)
     image, orig, ratio = reshape(image)
@@ -34,7 +33,8 @@ def scan(path):
     screen_contours = find_contours(edged)
     warped = perspective_transform(image, screen_contours, orig, ratio)
 
-    show_result(orig, warped)
+    # show_result(orig, warped)
+    return warped
 
 
 def read_image(path):
@@ -59,16 +59,17 @@ def detect_edges(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     gray = cv2.GaussianBlur(gray, (5, 5), 0)
     edged = cv2.Canny(gray, 75, 200)
-    # show the original image and the edge detected image
-    print("STEP 1: Edge Detection")
-    # cv2.imshow("Image", image)
-    img_stat = cv2.imwrite("./out/image.JPEG", image)
-    print("input image written successfully:", img_stat)
-    # cv2.imshow("Edged", edged)
-    img_stat = cv2.imwrite("./out/edged.JPEG", edged)
-    print("edged image written successfully:", img_stat)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
+
+    # # show the original image and the edge detected image
+    # print("STEP 1: Edge Detection")
+    # # cv2.imshow("Image", image)
+    # img_stat = cv2.imwrite("./out/image.JPEG", image)
+    # print("input image written successfully:", img_stat)
+    # # cv2.imshow("Edged", edged)
+    # img_stat = cv2.imwrite("./out/edged.JPEG", edged)
+    # print("edged image written successfully:", img_stat)
+    # # cv2.waitKey(0)
+    # # cv2.destroyAllWindows()
 
     return edged
 
@@ -93,21 +94,14 @@ def find_contours(edged):
             screenCnt = approx
             break
 
-    if screenCnt is None:
-        print("Contours not found!")
-        sys.exit(1)
-
     return screenCnt
 
 
 def perspective_transform(image, screenCnt, orig, ratio):
-    # show the contour (outline) of the piece of paper
-    print("STEP 2: Find contours of paper")
-    cv2.drawContours(image, [screenCnt], -1, (0, 255, 0), 2)
-    # cv2.imshow("Outline", image)
-    cv2.imwrite("out/outline.JPEG", image)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
+    # # show the contour (outline) of the piece of paper
+    # print("STEP 2: Find contours of paper")
+    # cv2.drawContours(image, [screenCnt], -1, (0, 255, 0), 2)
+    # cv2.imwrite("out/outline.JPEG", image)
 
     # apply the four point transform to obtain a top-down
     # view of the original image
@@ -124,8 +118,5 @@ def perspective_transform(image, screenCnt, orig, ratio):
 def show_result(orig, warped):
     # show the original and scanned images
     print("STEP 3: Apply perspective transform")
-    # cv2.imshow("Original", imutils.resize(orig, height = 650))
     cv2.imwrite("out/original.JPEG", imutils.resize(orig, height=650))
-    # cv2.imshow("Scanned", imutils.resize(warped, height = 650))
     cv2.imwrite("out/scanned.JPEG", imutils.resize(warped, height=650))
-    # cv2.waitKey(0)
