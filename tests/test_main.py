@@ -12,12 +12,11 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
+from src import main
+import pytest
 
-# .coveragerc to control pytest-cov
-[run]
-branch = True
-# omit =
-#    # Example comment
-#    ./example/dir/ -->
-source =
-    ./src
+
+def test_main():
+    with pytest.raises(SystemExit) as se:
+        main.main()
+    assert se.match("0")

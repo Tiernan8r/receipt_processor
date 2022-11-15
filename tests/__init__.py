@@ -12,12 +12,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-# .coveragerc to control pytest-cov
-[run]
-branch = True
-# omit =
-#    # Example comment
-#    ./example/dir/ -->
-source =
-    ./src
+import sys
+import os
+sys.path.append(os.getcwd() + os.sep + "src")
