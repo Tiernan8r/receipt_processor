@@ -1,10 +1,13 @@
 # import the necessary packages
-from transform import four_point_transform
-from skimage.filters import threshold_local
-import numpy as np
 import argparse
+import sys
+
 import cv2
 import imutils
+import numpy as np
+# from skimage.filters import threshold_local
+
+from transform import four_point_transform
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
