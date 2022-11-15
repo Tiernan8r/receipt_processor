@@ -15,32 +15,23 @@
 
 # Based on code originally from
 # https://pyimagesearch.com/2014/09/01/build-kick-ass-mobile-document-scanner-just-5-minutes/
-
-import sys
-
 import cv2
 import imutils
 
-from transform import four_point_transform
+import input
+import transform
 
 # from skimage.filters import threshold_local
 
 
 def scan(path):
-    image = read_image(path)
+    image = input.read_image(path)
     image, orig, ratio = reshape(image)
     edged = detect_edges(image)
     screen_contours = find_contours(edged)
-    warped = perspective_transform(image, screen_contours, orig, ratio)
+    scan_result = perspective_transform(image, screen_contours, orig, ratio)
 
-    # show_result(orig, warped)
-    return warped
-
-
-def read_image(path):
-    image = cv2.imread(path)
-
-    return image
+    return scan_result
 
 
 def reshape(image):
@@ -105,7 +96,7 @@ def perspective_transform(image, screenCnt, orig, ratio):
 
     # apply the four point transform to obtain a top-down
     # view of the original image
-    warped = four_point_transform(orig, screenCnt.reshape(4, 2) * ratio)
+    warped = transform.four_point_transform(orig, screenCnt.reshape(4, 2) * ratio)
     # convert the warped image to greyscale, then threshold it
     # to give it that 'black and white' paper effect
     warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
@@ -113,10 +104,3 @@ def perspective_transform(image, screenCnt, orig, ratio):
     # warped = (warped > T).astype("uint8") * 255
 
     return warped
-
-
-def show_result(orig, warped):
-    # show the original and scanned images
-    print("STEP 3: Apply perspective transform")
-    cv2.imwrite("out/original.JPEG", imutils.resize(orig, height=650))
-    cv2.imwrite("out/scanned.JPEG", imutils.resize(warped, height=650))

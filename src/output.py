@@ -12,35 +12,11 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-import os
-import sys
-
-# Required to guarantee that the 'qcp' module is accessible when
-# this file is run directly.
-if os.getcwd() not in sys.path:
-    sys.path.append(os.getcwd())
-
-import argparse
-
-import input
-import output
-import scan
+import cv2
+import imutils
 
 
-def main():
-    # construct the argument parser and parse the arguments
-    ap = argparse.ArgumentParser()
-    ap.add_argument("image_path",
-                    help="Path to the image to be scanned")
-    args = vars(ap.parse_args())
-
-    img_path = args["image_path"]
-
-    scanned_img = scan.scan(img_path)
-
-    orig = input.read_image(img_path)
-    output.show_result(orig, scanned_img)
-
-
-if __name__ == "__main__":
-    main()
+def show_result(orig, warped):
+    # show the original and scanned images
+    cv2.imwrite("out/original.JPEG", imutils.resize(orig, height=650))
+    cv2.imwrite("out/scanned.JPEG", imutils.resize(warped, height=650))
