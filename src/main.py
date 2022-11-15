@@ -21,6 +21,7 @@ if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
 
 import argparse
+
 import scan
 
 
@@ -33,7 +34,10 @@ def main():
 
     img_path = args["image_path"]
 
-    scan.scan(img_path)
+    scanned_img = scan.scan(img_path)
+
+    orig = scan.read_image(img_path)
+    scan.show_result(orig, scanned_img)
 
 
 if __name__ == "__main__":
