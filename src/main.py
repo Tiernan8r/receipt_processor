@@ -14,8 +14,10 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import sys
 
+
 def main():
     sys.exit(0)
+
 
 if __name__ == "__main__":
     main()
