@@ -14,20 +14,37 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import cv2
 import imutils
+import os
 
 
-def save(orig, warped):
-    # show the original and scanned images
-    write_success = cv2.imwrite(
-        "./out/original.JPEG", imutils.resize(orig, height=650))
-    if not write_success:
-        print("Could not write original image!")
+def save_dir():
+    return os.path.join(os.getcwd(), "scans")
 
-    scan_path = "./out/scanned.JPEG"
 
-    write_success = cv2.imwrite(
-        scan_path, imutils.resize(warped, height=650))
-    if not write_success:
-        print("Could not write scanned image!")
+def deconstruct_img_path(img_path):
+    dir, basename = os.path.split(img_path)
+    fname, extension = os.path.splitext(basename)
 
-    return scan_path
+    return dir, fname, extension
+
+
+def get_save_path(img_path):
+    _, fname, extension = deconstruct_img_path(img_path)
+
+    save_fname = fname + "-scan"
+
+    return os.path.join(save_dir(), save_fname + extension)
+
+
+def _ensure_path_exists(save_path):
+    dirs, fname = os.path.split(save_path)
+    if not os.path.exists(dirs):
+        os.makedirs(dirs)
+
+
+def save_img(img, save_path):
+    # Resize the image
+    resized = imutils.resize(img, height=650)
+    _ensure_path_exists(save_path)
+
+    return cv2.imwrite(save_path, resized)
