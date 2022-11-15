@@ -39,6 +39,8 @@ print("edged image written successfully:", img_stat)
 cnts = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 cnts = imutils.grab_contours(cnts)
 cnts = sorted(cnts, key=cv2.contourArea, reverse=True)[:5]
+
+screenCnt = None
 # loop over the contours
 for c in cnts:
     # approximate the contour
@@ -50,6 +52,11 @@ for c in cnts:
     if len(approx) == 4:
         screenCnt = approx
         break
+
+if screenCnt is None:
+    print("Contours not found!")
+    sys.exit(1)
+
 # show the contour (outline) of the piece of paper
 print("STEP 2: Find contours of paper")
 cv2.drawContours(image, [screenCnt], -1, (0, 255, 0), 2)
