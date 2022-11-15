@@ -25,6 +25,7 @@ import argparse
 import input
 import output
 from src.scanning import scan
+from src.ocr import extract
 
 
 def main():
@@ -39,7 +40,17 @@ def main():
     scanned_img = scan.scan(img_path)
 
     orig = input.read_image(img_path)
-    output.show_result(orig, scanned_img)
+    scan_path = output.save(orig, scanned_img)
+
+    # OCR:
+    text = extract.extract_text(scan_path)
+
+    with open("./out/output.txt", "w") as f:
+        f.write(text)
+    print("OUTPUT:")
+    print(text)
+
+    extract.extract_to_pdf(scan_path)
 
 
 if __name__ == "__main__":

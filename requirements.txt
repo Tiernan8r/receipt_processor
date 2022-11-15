@@ -22,13 +22,18 @@ numpy==1.23.4
 opencv-contrib-python-headless==4.6.0.66
     # via -r requirements.in
 packaging==21.3
-    # via scikit-image
+    # via
+    #   pytesseract
+    #   scikit-image
 pillow==9.3.0
     # via
     #   imageio
+    #   pytesseract
     #   scikit-image
 pyparsing==3.0.9
     # via packaging
+pytesseract==0.3.10
+    # via -r requirements.in
 pywavelets==1.4.1
     # via scikit-image
 scikit-image==0.19.3
