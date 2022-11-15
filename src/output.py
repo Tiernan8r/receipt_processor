@@ -12,11 +12,17 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-from src import main
-import pytest
+import cv2
+import imutils
 
 
-def test_main():
-    with pytest.raises(SystemExit) as se:
-        main.main()
-    assert se.match("2")
+def show_result(orig, warped):
+    # show the original and scanned images
+    write_success = cv2.imwrite(
+        "./out/original.JPEG", imutils.resize(orig, height=650))
+    if not write_success:
+        print("Could not write original image!")
+    write_success = cv2.imwrite(
+        "./out/scanned.JPEG", imutils.resize(warped, height=650))
+    if not write_success:
+        print("Could not write scanned image!")

@@ -12,11 +12,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-from src import main
-import pytest
+import cv2
 
 
-def test_main():
-    with pytest.raises(SystemExit) as se:
-        main.main()
-    assert se.match("2")
+def read_image(path):
+    image = cv2.imread(path)
+
+    return image
