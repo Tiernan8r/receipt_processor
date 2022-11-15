@@ -20,9 +20,20 @@ import sys
 if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
 
+import argparse
+import scan
+
 
 def main():
-    sys.exit(0)
+    # construct the argument parser and parse the arguments
+    ap = argparse.ArgumentParser()
+    ap.add_argument("image_path",
+                    help="Path to the image to be scanned")
+    args = vars(ap.parse_args())
+
+    img_path = args["image_path"]
+
+    scan.scan(img_path)
 
 
 if __name__ == "__main__":
