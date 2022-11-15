@@ -12,8 +12,5 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-imutils
-numpy
-opencv-contrib-python-headless
-pytesseract
-scikit-image
+import src.scanning.scan as scan  # noqa: F401
+import src.scanning.transform as transform  # noqa: F401

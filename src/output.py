@@ -16,13 +16,18 @@ import cv2
 import imutils
 
 
-def show_result(orig, warped):
+def save(orig, warped):
     # show the original and scanned images
     write_success = cv2.imwrite(
         "./out/original.JPEG", imutils.resize(orig, height=650))
     if not write_success:
         print("Could not write original image!")
+
+    scan_path = "./out/scanned.JPEG"
+
     write_success = cv2.imwrite(
-        "./out/scanned.JPEG", imutils.resize(warped, height=650))
+        scan_path, imutils.resize(warped, height=650))
     if not write_success:
         print("Could not write scanned image!")
+
+    return scan_path

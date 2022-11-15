@@ -12,8 +12,23 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-imutils
-numpy
-opencv-contrib-python-headless
-pytesseract
-scikit-image
+import PIL.Image
+import pytesseract
+
+
+def extract_text(image_path):
+    image = PIL.Image.open(image_path)
+
+    output = pytesseract.image_to_string(image, lang='eng')
+
+    return output
+
+
+def extract_to_pdf(image_path):
+    image = PIL.Image.open(image_path)
+
+    PDF = pytesseract.image_to_pdf_or_hocr(
+        image, lang='eng', config='', nice=0, extension='pdf')
+
+    with open("./out/demofile.pdf", "w+b") as f:
+        f.write(bytearray(PDF))
