@@ -19,4 +19,4 @@ import pytest
 def test_main():
     with pytest.raises(SystemExit) as se:
         main.main()
-    assert se.match("0")
+    assert se.match("2")
