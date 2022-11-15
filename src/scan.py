@@ -67,7 +67,7 @@ def detect_edges(image):
 
 def find_contours(edged):
     # find the contours in the edged image, keeping only the
-    # largest ones, and initialize the screen contour
+    # largest ones, and initialise the screen contour
     cnts = cv2.findContours(edged.copy(), cv2.RETR_LIST,
                             cv2.CHAIN_APPROX_SIMPLE)
     cnts = imutils.grab_contours(cnts)
