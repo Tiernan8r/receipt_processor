@@ -24,7 +24,7 @@ import argparse
 
 import input
 import output
-import scan
+from src.scanning import scan
 
 
 def main():
