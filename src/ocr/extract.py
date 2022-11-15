@@ -24,11 +24,11 @@ def extract_text(image_path):
     return output
 
 
-def extract_to_pdf(image_path):
+def extract_to_pdf(image_path, pdf_save_path):
     image = PIL.Image.open(image_path)
 
     PDF = pytesseract.image_to_pdf_or_hocr(
         image, lang='eng', config='', nice=0, extension='pdf')
 
-    with open("./out/demofile.pdf", "w+b") as f:
+    with open(pdf_save_path, "w+b") as f:
         f.write(bytearray(PDF))

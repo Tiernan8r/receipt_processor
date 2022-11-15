@@ -22,35 +22,49 @@ if os.getcwd() not in sys.path:
 
 import argparse
 
-import input
 import output
-from src.scanning import scan
 from src.ocr import extract
+from src.scanning import scan
 
 
-def main():
+def setup_cli():
     # construct the argument parser and parse the arguments
     ap = argparse.ArgumentParser()
     ap.add_argument("image_path",
                     help="Path to the image to be scanned")
+
+    return ap
+
+
+def main():
+    ap = setup_cli()
     args = vars(ap.parse_args())
 
     img_path = args["image_path"]
 
+    # Scan the image
     scanned_img = scan.scan(img_path)
+    scan_save_path = output.get_save_path(img_path)
 
-    orig = input.read_image(img_path)
-    scan_path = output.save(orig, scanned_img)
+    success = output.save_img(scanned_img, scan_save_path)
+    if not success:
+        print(f"Could not save image to path '{scan_save_path}'")
+        sys.exit(1)
 
     # OCR:
-    text = extract.extract_text(scan_path)
+    text = extract.extract_text(scan_save_path)
 
-    with open("./out/output.txt", "w") as f:
+    _, fname, _ = output.deconstruct_img_path(img_path)
+    text_path = os.path.join(output.save_dir(), fname + ".txt")
+
+    with open(text_path, "w") as f:
         f.write(text)
-    print("OUTPUT:")
+
+    print("Scan Text Result:")
     print(text)
 
-    extract.extract_to_pdf(scan_path)
+    pdf_path = os.path.join(output.save_dir(), fname + ".pdf")
+    extract.extract_to_pdf(scan_save_path, pdf_path)
 
 
 if __name__ == "__main__":
