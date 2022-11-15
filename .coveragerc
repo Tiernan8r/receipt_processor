@@ -16,8 +16,8 @@
 # .coveragerc to control pytest-cov
 [run]
 branch = True
-<!-- omit =
-    # 
-    ./example/dir/ -->
+# omit =
+#    # Example comment
+#    ./example/dir/ -->
 source =
     ./src
