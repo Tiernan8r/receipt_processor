@@ -22,10 +22,9 @@ if os.getcwd() not in sys.path:
 
 import argparse
 
-import input
 import output
-from src.scanning import scan
 from src.ocr import extract
+from src.scanning import scan
 
 
 def setup_cli():
