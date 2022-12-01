@@ -10,7 +10,7 @@ imutils==0.5.4
     # via -r requirements.in
 networkx==2.8.8
     # via scikit-image
-numpy==1.23.4
+numpy==1.23.5
     # via
     #   -r requirements.in
     #   imageio
